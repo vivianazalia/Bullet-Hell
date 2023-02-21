@@ -6,24 +6,44 @@ namespace BulletHell.Enemy
 {
     public abstract class Enemy : MonoBehaviour
     {
-        [SerializeField] protected int health;
-        [SerializeField] protected float speed;
+        [SerializeField] protected int _health;
+        [SerializeField] protected float _speed;
 
-        protected Rigidbody2D rb;
+        protected Rigidbody2D _rb;
 
         private void Start()
         {
-            rb = GetComponent<Rigidbody2D>();
+            _rb = GetComponent<Rigidbody2D>();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             Move();
         }
 
-        public abstract void Move();
-        public abstract void Attacked();
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                Died();
+            }
+        }
 
-        public abstract void Died();
+        public virtual void Attacked()
+        {
+            _health -= 2;
+        }
+
+        public virtual void Died()
+        {
+            //Turn to pool
+            if (_health <= 0)
+            {
+                Destroy(gameObject);
+                Debug.Log("Died!");
+            }
+        }
+
+        public abstract void Move();
     }
 }
