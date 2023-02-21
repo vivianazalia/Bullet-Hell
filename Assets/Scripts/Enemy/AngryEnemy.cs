@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BulletHell.Enemy
 {
-    public class AngryEnemy : Enemy
+    public class AngryEnemy : BaseEnemy
     {
         public override void Attacked()
         {

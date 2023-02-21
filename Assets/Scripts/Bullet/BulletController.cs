@@ -1,24 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BulletHell.Enemy;
 
 namespace BulletHell.Bullet
 {
     public class BulletController : MonoBehaviour
     {
-        [SerializeField] private float _speed = 1f;
-
-        private Rigidbody2D _rb;
-
-        private void Start()
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            _rb = GetComponent<Rigidbody2D>();
-            Move();
-        }
-
-        private void Move()
-        {
-            _rb.AddForce(Vector2.up * _speed);
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+                BaseEnemy enemy = collision.gameObject.GetComponent<BaseEnemy>();
+                if (enemy)
+                {
+                    enemy.Attacked();
+                }
+            }
         }
     }
 }

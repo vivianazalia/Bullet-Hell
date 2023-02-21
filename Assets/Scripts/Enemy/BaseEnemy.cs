@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BulletHell.Enemy
 {
-    public abstract class Enemy : MonoBehaviour
+    public abstract class BaseEnemy : MonoBehaviour
     {
         [SerializeField] protected int _health;
         [SerializeField] protected float _speed;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BulletHell.Enemy
 {
-    public class BasicEnemy : Enemy
+    public class BasicEnemy : BaseEnemy
     {
         public override void Move()
         {
