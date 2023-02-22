@@ -16,6 +16,8 @@ namespace BulletHell.Bullet
                 {
                     enemy.Attacked();
                 }
+
+                gameObject.SetActive(false);
             }
         }
     }

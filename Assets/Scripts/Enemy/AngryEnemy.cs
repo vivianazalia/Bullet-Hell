@@ -9,13 +9,13 @@ namespace BulletHell.Enemy
         public override void Attacked()
         {
             base.Attacked();
-            _speed = 3;
+            _speed = 2;
             Debug.Log("Angry Enemy Attacked!");
         }
 
         public override void Move()
         {
-            _rb.velocity = Vector2.right * _speed;
+            _rb.velocity = Vector2.up * _speed;
         }
     }
 }

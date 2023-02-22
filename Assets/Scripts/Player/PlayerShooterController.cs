@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BulletHell.ObjectPool;
 
 namespace BulletHell.Player
 {
@@ -25,8 +26,7 @@ namespace BulletHell.Player
 
         private void Shoot()
         {
-            GameObject bullet = Instantiate(_prefabBullet, _bulletSpawner.position, _bulletSpawner.rotation);
-            bullet.transform.SetParent(_bulletSpawner);
+            GameObject bullet = ObjectPoolController.Instance.GetFromPool("Bullet", _bulletSpawner.position, _bulletSpawner.rotation);
 
             Rigidbody2D rbBullet = bullet.GetComponent<Rigidbody2D>();
             if (rbBullet)
