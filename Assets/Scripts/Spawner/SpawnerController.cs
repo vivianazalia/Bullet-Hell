@@ -7,7 +7,7 @@ using BulletHell.Manager;
 
 namespace BulletHell.Spawner
 {
-    public class EnemySpawner : MonoBehaviour
+    public class SpawnerController : MonoBehaviour
     {
         [System.Serializable]
         public struct TagObjectSpawn

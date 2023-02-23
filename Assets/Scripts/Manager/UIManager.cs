@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using TMPro;
 
 namespace BulletHell.Manager
@@ -11,6 +12,7 @@ namespace BulletHell.Manager
         [SerializeField] private TMP_Text _healthPlayerText;
         [SerializeField] private TMP_Text _scoreText;
         [SerializeField] private TMP_Text _gameoverText;
+        [SerializeField] private Button _retryButton;
 
         public static UIManager Instance = null;
 
@@ -38,6 +40,8 @@ namespace BulletHell.Manager
             {
                 Instance = this;
             }
+
+            SetButtonListeners();
         }
 
         public void ChangeHealthPlayer(int health)
@@ -53,6 +57,13 @@ namespace BulletHell.Manager
         public void ShowPanelGameOver(bool active)
         {
             _gameoverText.gameObject.SetActive(active);
+            _retryButton.gameObject.SetActive(true);
+        }
+
+        private void SetButtonListeners()
+        {
+            _retryButton.onClick.RemoveAllListeners();
+            _retryButton.onClick.AddListener(delegate { GameManager.OnRetryGame?.Invoke(); });
         }
     }
 }

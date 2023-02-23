@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+using BulletHell.ObjectPool;
 
 namespace BulletHell.Manager
 {
@@ -11,6 +13,7 @@ namespace BulletHell.Manager
 
         public static UnityAction<int> OnAddScore;
         public static UnityAction<bool> OnGameOver;
+        public static UnityAction OnRetryGame;
 
         private int _score;
 
@@ -20,12 +23,14 @@ namespace BulletHell.Manager
         {
             OnAddScore += AddScore;
             OnGameOver += SetGameOver;
+            OnRetryGame += RetryGame;
         }
 
         private void OnDisable()
         {
             OnAddScore -= AddScore;
             OnGameOver -= SetGameOver;
+            OnRetryGame -= RetryGame;
         }
 
         private void Awake()
@@ -51,6 +56,11 @@ namespace BulletHell.Manager
         {
             GameOver = isGameOver;
             UIManager.OnGameOver?.Invoke(GameOver);
+        }
+
+        public void RetryGame()
+        {
+            SceneManager.LoadScene("Gameplay");
         }
     }
 }

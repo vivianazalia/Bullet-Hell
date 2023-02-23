@@ -16,19 +16,25 @@ namespace BulletHell.Player
         private float _timeToShoot = .5f;
         private float _currentTimer;
         private float _burstDuration = 5f;
+        private float _firerateTime = .1f;
+        private float _firerateDuration = 3f;
         private int _bulletCount = 1;
         private bool _isBurst = false;
+        private bool _isFirerate = false;
 
         public static UnityAction OnIncreaseBulletCount;
+        public static UnityAction OnFirerate;
 
         private void OnEnable()
         {
             OnIncreaseBulletCount += GetBurstShoot;
+            OnFirerate += GetFirerateShoot;
         }
 
         private void OnDisable()
         {
             OnIncreaseBulletCount -= GetBurstShoot;
+            OnFirerate -= GetFirerateShoot;
         }
 
         private void Update()
@@ -36,6 +42,7 @@ namespace BulletHell.Player
             if (!GameManager.Instance.GameOver)
             {
                 BurstDuration();
+                FirerateDuration();
                 TimeToShoot();
             }
         }
@@ -54,6 +61,17 @@ namespace BulletHell.Player
                 {
                     NormalShoot();
                 }
+
+                if (_isFirerate)
+                {
+                    FirerateShoot();
+                    return;
+                }
+                else
+                {
+                    NormalShoot();
+                }
+
                 _currentTimer = _timeToShoot;
             }
         }
@@ -116,10 +134,31 @@ namespace BulletHell.Player
         }
         #endregion
 
+        #region Firerate Shoot
         private void FirerateShoot()
         {
-
+            _currentTimer = _firerateTime;
         }
+
+        private void FirerateDuration()
+        {
+            if (_isFirerate)
+            {
+                _firerateDuration -= Time.deltaTime;
+
+                if (_firerateDuration <= 0)
+                {
+                    _isFirerate = false;
+                    _firerateDuration = 3f;
+                }
+            }
+        }
+
+        public void GetFirerateShoot()
+        {
+            _isFirerate = true;
+        }
+        #endregion
     }
 }
 

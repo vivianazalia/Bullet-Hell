@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using BulletHell.Manager;
 
 namespace BulletHell.ObjectPool
 {
@@ -65,6 +67,18 @@ namespace BulletHell.ObjectPool
             _poolDictionary[tag].Enqueue(objectToSpawn);
 
             return objectToSpawn;
+        }
+
+        public void TurnAllObjectToPool()
+        {
+            foreach(var pool in _poolDictionary.Values)
+            {
+                GameObject obj = pool.Dequeue();
+                if (obj.activeInHierarchy)
+                {
+                    obj.SetActive(false);
+                }
+            }
         }
     }
 }
