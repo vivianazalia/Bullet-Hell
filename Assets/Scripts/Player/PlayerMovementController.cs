@@ -24,17 +24,11 @@ namespace BulletHell.Player
             _inputX = Input.GetAxis("Horizontal");
             _inputY = Input.GetAxis("Vertical");
             _direction = new Vector2(_inputX, _inputY);
-            _angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg - 90;
         }
 
         private void FixedUpdate()
         {
             _rb.velocity = new Vector2(_direction.x, _direction.y) * _speed;
-
-            if(_direction != Vector2.zero)
-            {
-                _rb.rotation = _angle;
-            }
         }
     }
 }

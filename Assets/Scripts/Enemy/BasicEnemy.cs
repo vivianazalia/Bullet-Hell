@@ -6,9 +6,20 @@ namespace BulletHell.Enemy
 {
     public class BasicEnemy : BaseEnemy
     {
-        public override void Move()
+        protected override void Start()
         {
-            _rb.velocity = Vector2.up * _speed;
+            base.Start();
+            _killScore = 10;
+        }
+
+        protected override void OnEnable()
+        {
+            Invoke("Died", 3f);
+        }
+
+        private void OnDisable()
+        {
+            CancelInvoke();
         }
     }
 }

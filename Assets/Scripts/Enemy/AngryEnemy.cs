@@ -6,16 +6,28 @@ namespace BulletHell.Enemy
 {
     public class AngryEnemy : BaseEnemy
     {
+        protected override void Start()
+        {
+            base.Start();
+            _moveDirection = Vector2.down;
+            _killScore = 50;
+        }
+
+        protected override void OnEnable()
+        {
+            _speed = 3;
+            Invoke("Died", 3f);
+        }
+
         public override void Attacked()
         {
             base.Attacked();
-            _speed = 2;
-            Debug.Log("Angry Enemy Attacked!");
+            _speed = 5;
         }
 
-        public override void Move()
+        private void OnDisable()
         {
-            _rb.velocity = Vector2.up * _speed;
+            CancelInvoke();
         }
     }
 }

@@ -7,6 +7,11 @@ namespace BulletHell.Bullet
 {
     public class BulletController : MonoBehaviour
     {
+        private void OnEnable()
+        {
+            Invoke("DestroyBullet", 1f);
+        }
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.gameObject.CompareTag("Enemy"))
@@ -17,8 +22,13 @@ namespace BulletHell.Bullet
                     enemy.Attacked();
                 }
 
-                gameObject.SetActive(false);
+                DestroyBullet();
             }
+        }
+
+        private void DestroyBullet()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

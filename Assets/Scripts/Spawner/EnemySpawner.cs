@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BulletHell.Enemy;
 using BulletHell.ObjectPool;
+using BulletHell.Manager;
 
 namespace BulletHell.Spawner
 {
@@ -24,34 +25,56 @@ namespace BulletHell.Spawner
         [SerializeField] private int _tankerEnemyCount;
         [SerializeField] private int _motherEnemyCount;
 
+        private float _timeToSpawnAngryEnemy = .5f;
+        private float _timeToSpawnTankerEnemy = 3f;
+        private float _timeToSpawnMotherEnemy = 3f;
+        private float _currentTimerAngryEnemy;
+        private float _currentTimerTankerEnemy;
+        private float _currentTimerMotherEnemy;
+        private Transform _tempAngryEnemySpawnerTransform;
+
         private void Start()
         {
-            Spawn("AngryEnemy", _angryEnemySpawner);
+            _tempAngryEnemySpawnerTransform = _angryEnemySpawner;
         }
 
         private void Update()
         {
-            
+            if (!GameManager.Instance.GameOver)
+            {
+                ReduceTimer();
+            }
         }
 
-        private void Spawn(string tag, Transform spawner)
+        private void Spawn(string tag, Vector2 position, Quaternion rotation)
         {
             foreach(var enemy in _enemyList)
             {
                 if(enemy.tag == tag)
                 {
-                    ObjectPoolController.Instance.GetFromPool(tag, spawner.position, spawner.rotation);
+                    ObjectPoolController.Instance.GetFromPool(tag, position, rotation);
                 }
             }
         }
 
-        IEnumerator SpawnAngryEnemy()
+        private void SpawnAngryEnemy()
         {
-            for(int i = 0; i < _angryEnemyCount; i++)
+            float randomX = Random.Range(-2, 2);
+            Vector2 position = new Vector2(randomX, _angryEnemySpawner.position.y);
+            Spawn("AngryEnemy", position, _angryEnemySpawner.rotation);
+        }
+
+        private void ReduceTimer()
+        {
+            _currentTimerAngryEnemy -= Time.deltaTime;
+            _currentTimerTankerEnemy -= Time.deltaTime;
+            _currentTimerMotherEnemy -= Time.deltaTime;
+
+            if(_currentTimerAngryEnemy <= 0)
             {
-                Spawn("AngryEnemy", _angryEnemySpawner);
+                SpawnAngryEnemy();
+                _currentTimerAngryEnemy = _timeToSpawnAngryEnemy;
             }
-            yield return new WaitForSeconds(3f);
         }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BulletHell.ObjectPool;
+using BulletHell.Manager;
 
 namespace BulletHell.Player
 {
@@ -11,16 +12,19 @@ namespace BulletHell.Player
         [SerializeField] private Transform _bulletSpawner;
         [SerializeField] private float _speedBullet;
 
-        private void Update()
+        private float _timeToShoot = .5f;
+        private float _currentTimer;
+
+        private void Start()
         {
-            InputHandle();
+            //InvokeRepeating("Shoot", 0f, .5f);
         }
 
-        private void InputHandle()
+        private void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (!GameManager.Instance.GameOver)
             {
-                Shoot();
+                TimeToShoot();
             }
         }
 
@@ -32,6 +36,17 @@ namespace BulletHell.Player
             if (rbBullet)
             {
                 rbBullet.AddForce(_bulletSpawner.transform.up * _speedBullet);
+            }
+        }
+
+        private void TimeToShoot()
+        {
+            _currentTimer -= Time.deltaTime;
+
+            if (_currentTimer <= 0)
+            {
+                Shoot();
+                _currentTimer = _timeToShoot;
             }
         }
     }

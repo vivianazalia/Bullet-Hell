@@ -1,19 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BulletHell.Player;
+using BulletHell.Manager;
 
 namespace BulletHell.Enemy
 {
-    public abstract class BaseEnemy : MonoBehaviour
+    public class BaseEnemy : MonoBehaviour
     {
         [SerializeField] protected int _health;
         [SerializeField] protected float _speed;
 
         protected Rigidbody2D _rb;
+        protected Vector2 _moveDirection;
+        protected int _killScore = 0;
 
-        private void Start()
+        private bool _isDied = false;
+
+        protected virtual void OnEnable()
+        {
+            _isDied = false;
+        }
+
+        protected virtual void Start()
         {
             _rb = GetComponent<Rigidbody2D>();
+            GameManager.OnAddScore?.Invoke(_killScore);
+        }
+
+        private void Update()
+        {
+            Died();
         }
 
         private void FixedUpdate()
@@ -25,25 +42,33 @@ namespace BulletHell.Enemy
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                Died();
+                collision.gameObject.GetComponent<PlayerStats>().DecreaseHealth();
             }
+        }
+
+        public void SetMoveDirection(Vector2 direction)
+        {
+            _moveDirection = direction;
         }
 
         public virtual void Attacked()
         {
-            _health -= 2;
+            _health--;
         }
 
         public virtual void Died()
         {
-            //Turn to pool
-            if (_health <= 0)
+            if(_health <= 0 && !_isDied)
             {
-                Destroy(gameObject);
-                Debug.Log("Died!");
+                gameObject.SetActive(false);
+                GameManager.OnAddScore?.Invoke(_killScore);
+                _isDied = true;
             }
         }
 
-        public abstract void Move();
+        public virtual void Move()
+        {
+            _rb.velocity = _moveDirection * _speed;
+        }
     }
 }
