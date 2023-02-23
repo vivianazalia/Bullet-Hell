@@ -17,26 +17,15 @@ namespace BulletHell.Spawner
 
         [SerializeField] private List<EnemyType> _enemyList = new List<EnemyType>();
         [SerializeField] private Transform _angryEnemySpawner;
-        [SerializeField] private Transform _basicEnemySpawner;
         [SerializeField] private Transform _tankerEnemySpawner;
         [SerializeField] private Transform _motherEnemySpawner;
-        [SerializeField] private int _angryEnemyCount;
-        [SerializeField] private int _basicEnemyCount;
-        [SerializeField] private int _tankerEnemyCount;
-        [SerializeField] private int _motherEnemyCount;
 
         private float _timeToSpawnAngryEnemy = .5f;
-        private float _timeToSpawnTankerEnemy = 3f;
-        private float _timeToSpawnMotherEnemy = 3f;
+        private float _timeToSpawnTankerEnemy = 1.5f;
+        private float _timeToSpawnMotherEnemy = 10f;
         private float _currentTimerAngryEnemy;
         private float _currentTimerTankerEnemy;
         private float _currentTimerMotherEnemy;
-        private Transform _tempAngryEnemySpawnerTransform;
-
-        private void Start()
-        {
-            _tempAngryEnemySpawnerTransform = _angryEnemySpawner;
-        }
 
         private void Update()
         {
@@ -59,9 +48,23 @@ namespace BulletHell.Spawner
 
         private void SpawnAngryEnemy()
         {
-            float randomX = Random.Range(-2, 2);
+            float randomX = Random.Range(-2.5f, 2.5f);
             Vector2 position = new Vector2(randomX, _angryEnemySpawner.position.y);
             Spawn("AngryEnemy", position, _angryEnemySpawner.rotation);
+        }
+
+        private void SpawnMotherEnemy()
+        {
+            float randomX = Random.Range(-2, 2);
+            Vector2 position = new Vector2(randomX, _motherEnemySpawner.position.y);
+            Spawn("MotherEnemy", position, _motherEnemySpawner.rotation);
+        }
+
+        private void SpawnTankerEnemy()
+        {
+            float randomX = Random.Range(-2.5f, 2.5f);
+            Vector2 position = new Vector2(randomX, _tankerEnemySpawner.position.y);
+            Spawn("TankerEnemy", position, _tankerEnemySpawner.rotation);
         }
 
         private void ReduceTimer()
@@ -74,6 +77,18 @@ namespace BulletHell.Spawner
             {
                 SpawnAngryEnemy();
                 _currentTimerAngryEnemy = _timeToSpawnAngryEnemy;
+            }
+
+            if (_currentTimerMotherEnemy <= 0)
+            {
+                SpawnMotherEnemy();
+                _currentTimerMotherEnemy = _timeToSpawnMotherEnemy;
+            }
+
+            if (_currentTimerTankerEnemy <= 0)
+            {
+                SpawnTankerEnemy();
+                _currentTimerTankerEnemy = _timeToSpawnTankerEnemy;
             }
         }
     }

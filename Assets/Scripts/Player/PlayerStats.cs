@@ -19,6 +19,7 @@ namespace BulletHell.Player
             if (_health <= 0)
             {
                 GameManager.OnGameOver?.Invoke(true);
+                return;
             }
 
             _health--;

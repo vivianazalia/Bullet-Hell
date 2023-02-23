@@ -21,6 +21,7 @@ namespace BulletHell.Enemy
         protected override void Start()
         {
             base.Start();
+            _moveDirection = Vector2.down;
             _killScore = 100;
         }
 
@@ -46,7 +47,11 @@ namespace BulletHell.Enemy
 
         public override void Move()
         {
-            
+            base.Move();
+            if(transform.localPosition.y <= 3f)
+            {
+                transform.localPosition = new Vector3(transform.position.x, 3f, transform.position.z);
+            }
         }
 
         private void OnDisable()

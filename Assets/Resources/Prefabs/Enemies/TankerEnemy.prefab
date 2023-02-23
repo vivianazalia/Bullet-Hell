@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7040805674103839771}
   - component: {fileID: 7040805674103839768}
-  - component: {fileID: 7040805674103839770}
   - component: {fileID: 7040805674103839773}
   - component: {fileID: 7040805674103839772}
+  - component: {fileID: 7646903433975895123}
   m_Layer: 0
-  m_Name: AngryEnemy
+  m_Name: TankerEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.754717, g: 0.21003917, b: 0.21003917, a: 1}
+  m_Color: {r: 0.32483736, g: 0.16055535, b: 0.8301887, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -87,20 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7040805674103839770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7040805674103839769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c9bf417b7779274093ef90c7f72eaf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: 1
-  _speed: 3
 --- !u!50 &7040805674103839773
 Rigidbody2D:
   serializedVersion: 4
@@ -138,3 +124,17 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &7646903433975895123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7040805674103839769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d3b0d7de7eaa9d469f1bd9129d55a04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 10
+  _speed: 0

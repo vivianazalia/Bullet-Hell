@@ -35,12 +35,15 @@ namespace BulletHell.Enemy
 
         private void FixedUpdate()
         {
-            Move();
+            if (!GameManager.Instance.GameOver)
+            {
+                Move();
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.gameObject.CompareTag("Player"))
+            if (collision.gameObject.CompareTag("Player") && !GameManager.Instance.GameOver)
             {
                 collision.gameObject.GetComponent<PlayerStats>().DecreaseHealth();
             }
@@ -56,7 +59,7 @@ namespace BulletHell.Enemy
             _health--;
         }
 
-        public virtual void Died()
+        public void Died()
         {
             if(_health <= 0 && !_isDied)
             {

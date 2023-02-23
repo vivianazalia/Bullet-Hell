@@ -4,24 +4,19 @@ using UnityEngine;
 
 namespace BulletHell.Enemy
 {
-    public class AngryEnemy : BaseEnemy
+    public class TankerEnemy : BaseEnemy
     {
         protected override void Start()
         {
             base.Start();
             _moveDirection = Vector2.down;
-            _killScore = 50;
+            _killScore = 80;
         }
 
         protected override void OnEnable()
         {
-            _speed = 3;
-            Invoke("Died", 3f);
-        }
-
-        public override void Attacked()
-        {
-            _speed = 5;
+            _speed = 1;
+            Invoke("Died", 5f);
         }
 
         private void OnDisable()
@@ -30,3 +25,4 @@ namespace BulletHell.Enemy
         }
     }
 }
+

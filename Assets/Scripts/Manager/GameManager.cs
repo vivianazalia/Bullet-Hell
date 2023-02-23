@@ -50,6 +50,7 @@ namespace BulletHell.Manager
         public void SetGameOver(bool isGameOver)
         {
             GameOver = isGameOver;
+            UIManager.OnGameOver?.Invoke(GameOver);
         }
     }
 }
