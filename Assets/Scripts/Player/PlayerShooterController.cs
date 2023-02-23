@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using BulletHell.ObjectPool;
 using BulletHell.Manager;
 
@@ -14,21 +15,50 @@ namespace BulletHell.Player
 
         private float _timeToShoot = .5f;
         private float _currentTimer;
+        private float _burstDuration = 5f;
+        private int _bulletCount = 1;
+        private bool _isBurst = false;
 
-        private void Start()
+        public static UnityAction OnIncreaseBulletCount;
+
+        private void OnEnable()
         {
-            //InvokeRepeating("Shoot", 0f, .5f);
+            OnIncreaseBulletCount += GetBurstShoot;
+        }
+
+        private void OnDisable()
+        {
+            OnIncreaseBulletCount -= GetBurstShoot;
         }
 
         private void Update()
         {
             if (!GameManager.Instance.GameOver)
             {
+                BurstDuration();
                 TimeToShoot();
             }
         }
 
-        private void Shoot()
+        private void TimeToShoot()
+        {
+            _currentTimer -= Time.deltaTime;
+
+            if (_currentTimer <= 0)
+            {
+                if (_isBurst)
+                {
+                    BurstShoot();
+                }
+                else
+                {
+                    NormalShoot();
+                }
+                _currentTimer = _timeToShoot;
+            }
+        }
+
+        private void NormalShoot()
         {
             GameObject bullet = ObjectPoolController.Instance.GetFromPool("Bullet", _bulletSpawner.position, _bulletSpawner.rotation);
 
@@ -39,15 +69,56 @@ namespace BulletHell.Player
             }
         }
 
-        private void TimeToShoot()
+        #region Burst Shoot
+        private void BurstShoot()
         {
-            _currentTimer -= Time.deltaTime;
+            float angleStep = 150 / _bulletCount;
+            float angle = 0;
 
-            if (_currentTimer <= 0)
+            for (int i = 0; i < _bulletCount; i++)
             {
-                Shoot();
-                _currentTimer = _timeToShoot;
+                float bulletDirX = _bulletSpawner.position.x + Mathf.Sin((angle * Mathf.PI) / 180);
+                float bulletDirY = _bulletSpawner.position.x + Mathf.Cos((angle * Mathf.PI) / 180);
+
+                Vector3 bulletMove = new Vector3(bulletDirX, bulletDirY, 0f);
+                Vector2 bulletDirection = (bulletMove - _bulletSpawner.position).normalized;
+
+                GameObject bullet = ObjectPoolController.Instance.GetFromPool("Bullet", _bulletSpawner.position, _bulletSpawner.rotation);
+
+                Rigidbody2D rbBullet = bullet.GetComponent<Rigidbody2D>();
+                if (rbBullet)
+                {
+                    rbBullet.AddForce(bulletDirection * _speedBullet);
+                }
+
+                angle += angleStep;
             }
+        }
+
+        private void BurstDuration()
+        {
+            if (_isBurst)
+            {
+                _burstDuration -= Time.deltaTime;
+
+                if (_burstDuration <= 0)
+                {
+                    _isBurst = false;
+                    _burstDuration = 5f;
+                }
+            }
+        }
+
+        public void GetBurstShoot()
+        {
+            _isBurst = true;
+            _bulletCount++;
+        }
+        #endregion
+
+        private void FirerateShoot()
+        {
+
         }
     }
 }

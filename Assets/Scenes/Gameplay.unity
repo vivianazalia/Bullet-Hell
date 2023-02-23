@@ -568,6 +568,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &564039863
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 564039864}
+  m_Layer: 0
+  m_Name: BurstSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &564039864
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 564039863}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2, y: 7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1754910043}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &676982660
 GameObject:
   m_ObjectHideFlags: 0
@@ -884,6 +915,37 @@ Transform:
   m_Father: {fileID: 1754910043}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1280742084
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1280742085}
+  m_Layer: 0
+  m_Name: FirerateSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1280742085
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280742084}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2, y: 7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1754910043}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1579353561
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,6 +1022,12 @@ MonoBehaviour:
   - tag: TankerEnemy
     prefab: {fileID: 7040805674103839769, guid: 092bcb9992a46bc4fbb4fcbc686d32fe, type: 3}
     size: 10
+  - tag: Burst
+    prefab: {fileID: 7377145522300974303, guid: 60ddf14c3fd92904894b251295947840, type: 3}
+    size: 10
+  - tag: Firerate
+    prefab: {fileID: 7377145522300974303, guid: 6add53ab08a8bea4f9cade50a5e3b910, type: 3}
+    size: 10
 --- !u!4 &1641773355
 Transform:
   m_ObjectHideFlags: 0
@@ -1004,13 +1072,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ec536764bb54fc4ca4f8446d7e84848, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyList:
+  _tagObjectList:
   - tag: AngryEnemy
   - tag: MotherEnemy
   - tag: TankerEnemy
+  - tag: BasicEnemy
+  - tag: Burst
+  - tag: Firerate
   _angryEnemySpawner: {fileID: 1178643539}
   _tankerEnemySpawner: {fileID: 1881646622}
   _motherEnemySpawner: {fileID: 414910153}
+  _burstSpawnerTransform: {fileID: 564039864}
+  _firerateSpawnerTransform: {fileID: 1280742085}
 --- !u!4 &1754910043
 Transform:
   m_ObjectHideFlags: 0
@@ -1026,6 +1099,8 @@ Transform:
   - {fileID: 1178643539}
   - {fileID: 414910153}
   - {fileID: 1881646622}
+  - {fileID: 564039864}
+  - {fileID: 1280742085}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
