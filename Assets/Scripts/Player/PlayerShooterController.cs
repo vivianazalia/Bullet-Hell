@@ -130,7 +130,15 @@ namespace BulletHell.Player
         public void GetBurstShoot()
         {
             _isBurst = true;
-            _bulletCount++;
+
+            if(_bulletCount > 5)
+            {
+                _bulletCount = 1;
+            }
+            else
+            {
+                _bulletCount++;
+            }
         }
         #endregion
 

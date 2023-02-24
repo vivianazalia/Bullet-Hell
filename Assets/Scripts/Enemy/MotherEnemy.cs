@@ -48,9 +48,12 @@ namespace BulletHell.Enemy
         public override void Move()
         {
             base.Move();
-            if(transform.localPosition.y <= 3f)
+            if (!GameManager.Instance.GameOver)
             {
-                transform.localPosition = new Vector3(transform.position.x, 3f, transform.position.z);
+                if (transform.localPosition.y <= 3f)
+                {
+                    transform.localPosition = new Vector3(transform.position.x, 3f, transform.position.z);
+                }
             }
         }
 
